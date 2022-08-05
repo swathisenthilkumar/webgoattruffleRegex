@@ -45,4 +45,6 @@ steps:
     targetType: 'inline'
     script: |
       CRITICAL=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountCritical')
-      echo $CRITICAL
+      echo "CRITICAL=$CRITICAL"
+      HIGH=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountHigh')
+      echo "HIGH=$HIGH"
