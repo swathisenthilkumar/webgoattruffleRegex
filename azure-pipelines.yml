@@ -46,12 +46,22 @@ steps:
     script: |
       CRITICAL=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountCritical')
       HIGH=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountHigh')
+      MEDIUM=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountMedium')
+      LOW=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountLow')
+      SUM=$(( $CRITICAL + $HIGH + $MEDIUM + $LOW ))
+      echo "Total Sum of all vulnerabilities =$SUM"
       echo "CRITICAL=$CRITICAL"
       echo "HIGH=$HIGH"
-      if [ $CRITICAL -gt 10 ]
+      if [ $CRITICAL -gt 5 ]
       then
-        echo "failing task because number of critical issues are greater than 10"
+        echo "Failing task because number of critical issues are greater than 5"
+        exit 1
+      elif [ $HIGH -gt 10 ]
+        echo "Failing task because number of high issues are greater than 10"
+        exit 1
+      elif [ $SUM -gt 50 ]
+        echo "Failing task because number of total issues are greater than 50"
         exit 1
       else
-        echo "Passed"
+        echo "PASSED:Your Scan did not breach our Security Quality Metrics"
       fi
