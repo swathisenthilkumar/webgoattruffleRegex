@@ -50,8 +50,8 @@ steps:
       LOW=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountLow')
       SUM=$(( $CRITICAL + $HIGH + $MEDIUM + $LOW ))
       echo "Total Sum of all vulnerabilities = $SUM"
-      echo "CRITICAL=$CRITICAL"
-      echo "HIGH=$HIGH"
+      echo "CRITICAL = $CRITICAL"
+      echo "HIGH = $HIGH"
       if [ $CRITICAL -gt 5 ]
       then
         echo "Failing task because number of critical issues are greater than 5"
