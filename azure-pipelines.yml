@@ -43,4 +43,6 @@ steps:
 - task: Bash@3
   inputs:
     targetType: 'inline'
-    script: 'curl -X GET --header ''Accept: application/json'' --header $(BEARER_TOKEN) ''https://api.sandbox.fortify.com/api/v3/scans/6324/summary'' | jq -r ''.issueCountCritical'''
+    script: |
+      CRITICAL=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountCritical')
+      echo $CRITICAL
