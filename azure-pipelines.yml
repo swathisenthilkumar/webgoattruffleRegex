@@ -17,26 +17,30 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: 'wget https://github.com/ANKIT-KS/WebGoat/archive/refs/heads/develop.zip'
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: 'wget -c https://github.com/fod-dev/fod-uploader-java/releases/download/v5.2.1/FodUpload.jar'
+# - task: Bash@3
+#   inputs:
+#     targetType: 'inline'
+#     script: 'wget https://github.com/ANKIT-KS/WebGoat/archive/refs/heads/develop.zip'
+# - task: Bash@3
+#   inputs:
+#     targetType: 'inline'
+#     script: 'wget -c https://github.com/fod-dev/fod-uploader-java/releases/download/v5.2.1/FodUpload.jar'
 
+# - task: Bash@3
+#   inputs:
+#     targetType: 'inline'
+#     script: |
+#       java -jar FodUpload.jar -ac $(FOD-API-KEY) $(FOD-SECRET) -rid 9516 -purl "https://sandbox.fortify.com/" -apiurl "https://api.sandbox.fortify.com/" -z develop.zip -ep 2 -rp 0 -pp 1 -apf -I 1
+#               status=$?
+#               echo $status
+#               if test $status -eq 1
+#               then
+#                 echo "scan is successful"
+#               else
+#                 exit 1 
+#               fi
+#             failOnStderr: true
 - task: Bash@3
   inputs:
     targetType: 'inline'
-    script: |
-      java -jar FodUpload.jar -ac $(FOD-API-KEY) $(FOD-SECRET) -rid 9516 -purl "https://sandbox.fortify.com/" -apiurl "https://api.sandbox.fortify.com/" -z develop.zip -ep 2 -rp 0 -pp 1 -apf -I 1
-              status=$?
-              echo $status
-              if test $status -eq 1
-              then
-                echo "scan is successful"
-              else
-                exit 1 
-              fi
-            failOnStderr: true
+    script: 'curl -X GET --header ''Accept: application/json'' --header $(BEARER_TOKEN) ''https://api.sandbox.fortify.com/api/v3/scans/6324/summary'''
