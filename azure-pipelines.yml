@@ -59,9 +59,6 @@ steps:
       elif [ $HIGH -gt 10 ]
         echo "Failing task because number of high issues are greater than 10"
         exit 1
-      elif [ $SUM -gt 50 ]
-        echo "Failing task because number of total issues are greater than 50"
-        exit 1
       else
         echo "PASSED:Your Scan did not breach our Security Quality Metrics"
       fi
