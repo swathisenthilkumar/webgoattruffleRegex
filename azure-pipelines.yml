@@ -56,9 +56,6 @@ steps:
       then
         echo "Failing task because number of critical issues are greater than 5"
         exit 1
-      elif [ $HIGH -gt 10 ]
-        echo "Failing task because number of high issues are greater than 10"
-        exit 1
       else
         echo "PASSED"
       fi
