@@ -46,7 +46,7 @@ steps:
     script: |
       date=$(date '+%Y-%m-%d')
       echo $date
-      scan_id = $(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans?startedOnStartDate=2022-08-08' | jq -r '.scanId')
+      scan_id=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans?startedOnStartDate=2022-08-08' | jq -r '.scanId')
       echo $scan_id
 - task: Bash@3
   inputs:
