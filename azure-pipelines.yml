@@ -56,9 +56,9 @@ steps:
     script: |
       SCANID=6339
       URL="https://api.sandbox.fortify.com/api/v3/scans/${SCANID}/summary"
-      CURL="curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) '${URL}'"
+      CURL="-X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) '${URL}'"
       echo $CURL
-      CRITICAL=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6339/summary' | jq -r '.issueCountCritical')
+      CRITICAL=$(curl ${CURL} | jq -r '.issueCountCritical')
       HIGH=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountHigh')
       SUM=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.totalIssues')
       echo "Total Sum of all vulnerabilities = $SUM"
