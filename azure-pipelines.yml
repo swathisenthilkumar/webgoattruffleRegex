@@ -55,7 +55,7 @@ steps:
     targetType: 'inline'
     script: |
       scans_id=6339
-      CRITICAL=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/$scans_id/summary' | jq -r '.issueCountCritical')
+      CRITICAL=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/"$scans_id"/summary' | jq -r '.issueCountCritical')
       HIGH=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountHigh')
       MEDIUM=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountMedium')
       LOW=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountLow')
