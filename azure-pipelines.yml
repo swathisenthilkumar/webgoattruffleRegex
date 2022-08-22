@@ -84,7 +84,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      output=$(curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header 'Connection: close' --data-binary 'grant_type=client_credentials&scope=api-tenant&client_id=57530510-54ce-4d4d-8794-741a497bc1cb&client_secret=RElqazNqc0xLM2dtbyRNLDBxS1RTMDBYUVJ2WShP0' 'https://api.emea.fortify.com/oauth/token')
+      output=$(curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header 'Connection: close' --data-binary 'grant_type=client_credentials&scope=api-tenant&client_id=57530510-54ce-4d4d-8794-741a497bc1cb&client_secret=RElqazNqc0xLM2dtbyRNLDBxS1RTMDBYUVJ2WShP0' 'https://api.sandbox.fortify.com/oauth/token')
                    echo "$output"
                    tok3n=$( echo "$output" | jq '.["access_token"]' )
                    tok3n="${tok3n:1:-1}"
