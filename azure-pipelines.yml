@@ -40,42 +40,53 @@ steps:
 #                 exit 1 
 #               fi
 #             failOnStderr: true
+# - task: Bash@3
+#   inputs:
+#     targetType: 'inline'
+#     script: |
+#       date=$(date '+%Y-%m-%d')
+#       echo $date
+#       scan_id=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans?startedOnStartDate=2022-08-04' | jq -r '.scanId')
+#       echo $scan_id
+      
+      
+# - task: Bash@3
+#   inputs:
+#     targetType: 'inline'
+#     script: |
+#       SCANID=6339
+#       URL="https://api.sandbox.fortify.com/api/v3/scans/${SCANID}/summary"
+#       CURL="-X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) '${URL}'"
+#       echo $CURL
+#       CRITICAL=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6339/summary' | jq -r '.issueCountCritical')
+#       HIGH=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountHigh')
+#       SUM=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.totalIssues')
+#       echo "Total Sum of all vulnerabilities = $SUM"
+#       echo "CRITICAL = $CRITICAL"
+#       echo "HIGH = $HIGH"
+#       if [ $CRITICAL -gt 5 ]
+#       then
+#         echo "Failing task because number of critical issues are greater than 5"
+#         exit 1
+#       elif [ $HIGH -gt 10 ]
+#       then
+#         echo "Failing task because number of high issues are greater than 10"
+#         exit 1
+#       elif [ $SUM -gt 50 ]
+#       then
+#         echo "Failing task because number of total issues are greater than 50"
+#         exit 1
+#       else
+#         echo "PASSED"
+#       fi
+
 - task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
-      date=$(date '+%Y-%m-%d')
-      echo $date
-      scan_id=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans?startedOnStartDate=2022-08-04' | jq -r '.scanId')
-      echo $scan_id
-      
-      
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: |
-      SCANID=6339
-      URL="https://api.sandbox.fortify.com/api/v3/scans/${SCANID}/summary"
-      CURL="-X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) '${URL}'"
-      echo $CURL
-      CRITICAL=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6339/summary' | jq -r '.issueCountCritical')
-      HIGH=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountHigh')
-      SUM=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.totalIssues')
-      echo "Total Sum of all vulnerabilities = $SUM"
-      echo "CRITICAL = $CRITICAL"
-      echo "HIGH = $HIGH"
-      if [ $CRITICAL -gt 5 ]
-      then
-        echo "Failing task because number of critical issues are greater than 5"
-        exit 1
-      elif [ $HIGH -gt 10 ]
-      then
-        echo "Failing task because number of high issues are greater than 10"
-        exit 1
-      elif [ $SUM -gt 50 ]
-      then
-        echo "Failing task because number of total issues are greater than 50"
-        exit 1
-      else
-        echo "PASSED"
-      fi
+      output=$(curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header 'Connection: close' --data-binary 'grant_type=client_credentials&scope=api-tenant&client_id=57530510-54ce-4d4d-8794-741a497bc1cb&client_secret=RElqazNqc0xLM2dtbyRNLDBxS1RTMDBYUVJ2WShP0' 'https://api.emea.fortify.com/oauth/token')
+                   echo "$output"
+                   tok3n=$( echo "$output" | jq '.["access_token"]' )
+                   tok3n="${tok3n:1:-1}"
+                   echo "$now"
+                   curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n}' -d '{"startDate": "2022-08-20T05:35:23.645Z", "assessmentTypeId": 45, "entitlementId": 360, "entitlementFrequencyType": "SingleScan", "isRemediationScan": false, "isBundledAssessment": false, "parentAssessmentTypeId": 0, "applyPreviousScanSettings": false, "scanMethodType": "IDE", "scanTool": "string", "scanToolVersion": "string"}' 'https://api.emea.fortify.com/api/v3/releases/9516/dynamic-scans/start-scan'
