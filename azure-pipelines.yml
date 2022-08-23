@@ -84,7 +84,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      output=$(curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header 'Connection: close' --data-binary 'grant_type=client_credentials&scope=api-tenant&client_id=$(FOD-API-KEY)&client_secret=$(FOD-SECRET)' 'https://api.sandbox.fortify.com/oauth/token')
+      output=$(curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header 'Connection: close' -d 'grant_type=client_credentials&scope=api-tenant&client_id=$(FOD-API-KEY)&client_secret=$(FOD-SECRET)' 'https://api.sandbox.fortify.com/oauth/token')
                    echo "$output"
                    tok3n=$( echo "$output" | jq '.["access_token"]' )
                    tok3n="${tok3n:1:-1}"
