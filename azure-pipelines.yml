@@ -91,5 +91,5 @@ steps:
                    echo $tok3n
                    declare -a assessmenttypeID
                    assessmenttypeID=$(curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} 'https://api.sandbox.fortify.com/api/v3/releases/9516/dynamic-scans/scan-setup' | jq -r '.data[] | "assessmentTypeId" , "entitlementId" ')
-                   echo ${assessmenttypeID[*]}
+                   echo $assessmenttypeID
                  # curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} -d '{"startDate": "2022-08-20T05:35:23.645Z", "assessmentTypeId": ${assessmenttypeID}, "entitlementId": 360, "entitlementFrequencyType": "SingleScan", "isRemediationScan": false, "isBundledAssessment": false, "parentAssessmentTypeId": 0, "applyPreviousScanSettings": false, "scanMethodType": "IDE", "scanTool": "string", "scanToolVersion": "string"}' 'https://api.sandbox.fortify.com/api/v3/releases/9524/dynamic-scans/start-scan'
