@@ -62,9 +62,9 @@ steps:
                     echo $assessmenttypeID
                     echo $entitlementID
                     scanid=6339
-             CRITICAL=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/'${scanid}'/summary' | jq -r '.issueCountCritical')
-             HIGH=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountHigh')
-             SUM=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.totalIssues')
+             CRITICAL=$(curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} 'https://api.sandbox.fortify.com/api/v3/scans/'${scanid}'/summary' | jq -r '.issueCountCritical')
+             HIGH=$(curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.issueCountHigh')
+             SUM=$(curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} 'https://api.sandbox.fortify.com/api/v3/scans/6324/summary' | jq -r '.totalIssues')
              echo "Total Sum of all vulnerabilities = $SUM"
              echo "CRITICAL = $CRITICAL"
              echo "HIGH = $HIGH"
