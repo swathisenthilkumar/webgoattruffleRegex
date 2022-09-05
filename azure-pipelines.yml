@@ -53,9 +53,9 @@ steps:
     targetType: 'inline'
     script: |
       auth=$(curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header 'Connection: close' -d 'grant_type=client_credentials&scope=api-tenant&client_id=$(FOD-API-KEY)&client_secret=$(FOD-SECRET)' 'https://api.sandbox.fortify.com/oauth/token')
-                    tok3n=$( echo "$auth" | jq '.["access_token"]' )
-                    tok3n="${tok3n:1:-1}"
-                    scanid=6339
+             tok3n=$( echo "$auth" | jq '.["access_token"]' )
+             tok3n="${tok3n:1:-1}"
+             scanid=$(curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} 'https://api.sandbox.fortify.com/api/v3/releases/9516' | jq .currentStaticScanId)
              scanSummary=$(curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} 'https://api.sandbox.fortify.com/api/v3/scans/'${scanid}'/summary')
              CRITICAL=$( echo "$scanSummary" | jq .issueCountCritical )
              HIGH=$( echo "$scanSummary" | jq .issueCountHigh )
