@@ -27,7 +27,7 @@ jobs:
     permissions:
       contents: read 
     runs-on: ubuntu-latest
-     steps:
+    steps:
     - uses: actions/checkout@v1
     - name: Snyk SCA Scanning
       continue-on-error: true
