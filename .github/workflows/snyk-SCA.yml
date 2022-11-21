@@ -30,10 +30,27 @@ jobs:
         echo "----------Snyk Monitor------------"
         ./snyk monitor --all-projects
         snykCount=$(curl -X GET --header 'Content-Type: application/json' --header 'Authorization: token c799f25b-d339-4d15-accd-ae8c11d2c49e' 'https://api.snyk.io/api/v1/org/b75daed6-3330-4723-b097-ed83f67917b4/project/0c204406-4008-493a-9ac9-67eaba4c332f')
-             snykCritical=$(echo "$snykCount" | jq .issueCountsBySeverity.critical )
-             snykHigh=$(echo "$snykCount" | jq .issueCountsBySeverity.high )
-             snykMedium=$(echo "$snykCount" | jq .issueCountsBySeverity.medium )
+             CRITICAL=$(echo "$snykCount" | jq .issueCountsBySeverity.critical )
+             HIGH=$(echo "$snykCount" | jq .issueCountsBySeverity.high )
+             MEDIUM=$(echo "$snykCount" | jq .issueCountsBySeverity.medium )
              snykLow=$(echo "$snykCount" | jq .issueCountsBySeverity.low )
-             echo "CRITICAL = $snykCritical"
-             echo "HIGH = $snykHigh"
-             echo "HIGH = $snykHigh"
+             echo "CRITICAL = $CRITICAL"
+             echo "HIGH = $HIGH"
+             echo "MEDIUM = $MEDIUM"
+             echo "LOW = $snykLow"
+             if [ $CRITICAL -gt 5 ]
+             then
+               echo "Failing task because number of critical issues are greater than 5"
+               exit 1
+             elif [ $HIGH -gt 10 ]
+             then
+               echo "Failing task because number of high issues are greater than 10"
+               exit 1
+             elif [ $MEDIUM -gt 5 ]
+             then
+               echo "Failing task because number of high issues are greater than 15"
+               exit 1  
+             else
+               echo "PASSED"
+             fi
+             
