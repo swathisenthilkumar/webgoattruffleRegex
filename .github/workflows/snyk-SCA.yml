@@ -48,7 +48,7 @@ jobs:
                exit 1
              elif [ $MEDIUM -gt 5 ]
              then
-               echo "Failing task because number of high issues are greater than 15"
+               echo "Failing task because number of Medium issues are greater than 5"
                exit 1  
              else
                echo "PASSED"
