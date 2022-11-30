@@ -33,7 +33,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-       java -jar FodUpload.jar -ac $(FOD-API-KEY) $(FOD-SECRET) -rid 114174 -purl "https://emea.fortify.com/" -apiurl "https://api.emea.fortify.com/" -z WebGoat-develop.zip -ep 2 -rp 0 -pp 1 -apf -I 1
+       java -jar FodUpload.jar -ac $(FOD-API-KEY) $(FOD-SECRET) -rid 114174 -purl "https://emea.fortify.com/" -apiurl "https://api.emea.fortify.com/" -z develop.zip -ep 2 -rp 0 -pp 1 -apf -I 1
                status=$?
                echo $status
 
