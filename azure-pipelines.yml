@@ -33,7 +33,7 @@ steps:
 #   inputs:
 #     targetType: 'inline'
 #     script: |
-#       java -jar FodUpload.jar -ac $(FOD-API-KEY) $(FOD-SECRET) -rid 9516 -purl "https://sandbox.fortify.com/" -apiurl "https://api.sandbox.fortify.com/" -z develop.zip -ep 2 -rp 0 -pp 1 -apf -I 1
+#       java -jar FodUpload.jar -ac $(FOD-API-KEY) $(FOD-SECRET) -rid 114174 -purl "https://emea.fortify.com/" -apiurl "https://api.emea.fortify.com/" -z develop.zip -ep 2 -rp 0 -pp 1 -apf -I 1
 #               status=$?
 #               echo $status
 #               if test $status -eq 1
@@ -49,18 +49,18 @@ steps:
 #     script: |
 #       date=$(date '+%Y-%m-%d')
 #       echo $date
-#       scan_id=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.sandbox.fortify.com/api/v3/scans?startedOnStartDate=2022-08-04' | jq -r '.scanId')
+#       scan_id=$(curl -X GET --header 'Accept: application/json' --header $(BEARER_TOKEN) 'https://api.emea.fortify.com/api/v3/scans?startedOnStartDate=2022-08-04' | jq -r '.scanId')
 #       echo $scan_id
 - task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
-      auth=$(curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header 'Connection: close' -d 'grant_type=client_credentials&scope=api-tenant&client_id=$(FOD-API-KEY)&client_secret=$(FOD-SECRET)' 'https://api.sandbox.fortify.com/oauth/token')
+      auth=$(curl -X POST --header 'Content-Type: application/x-www-form-urlencoded' --header 'Connection: close' -d 'grant_type=client_credentials&scope=api-tenant&client_id=$(FOD-API-KEY)&client_secret=$(FOD-SECRET)' 'https://api.emea.fortify.com/oauth/token')
              tok3n=$( echo "$auth" | jq '.["access_token"]' )
              tok3n="${tok3n:1:-1}"
-             releasedetails=$(curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} 'https://api.sandbox.fortify.com/api/v3/releases/9516')
+             releasedetails=$(curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} 'https://api.emea.fortify.com/api/v3/releases/114174')
              scanid=$( echo "$releasedetails" | jq .currentStaticScanId )
-             scanSummary=$(curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} 'https://api.sandbox.fortify.com/api/v3/scans/'${scanid}'/summary')
+             scanSummary=$(curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer '${tok3n} 'https://api.emea.fortify.com/api/v3/scans/'${scanid}'/summary')
              CRITICAL=$( echo "$releasedetails" | jq .staticCritical )
              HIGH=$( echo "$releasedetails" | jq .staticHigh )
              SUM=$( echo "$scanSummary" | jq .totalIssues )
