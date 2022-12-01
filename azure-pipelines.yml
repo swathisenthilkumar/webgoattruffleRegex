@@ -25,7 +25,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      curl https://github.com/fod-dev/fod-uploader-java/releases/download/v5.2.1/FodUpload.jar -O
+      wget -c https://github.com/fod-dev/fod-uploader-java/releases/download/v5.2.1/FodUpload.jar
       pwd
       ls -lrt
 
