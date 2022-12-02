@@ -29,7 +29,7 @@ jobs:
         echo "----------Snyk Scanning-----------"
         echo "----------Snyk Monitor------------"
         ./snyk monitor --all-projects
-        snykCount=$(curl -X GET --header 'Content-Type: application/json' --header 'Authorization: token <authtoken>' 'https://api.snyk.io/api/v1/org/<orgid>/project/<projectid>')
+        snykCount=$(curl -X GET --header 'Content-Type: application/json' --header 'Authorization: token 1545e8cc-3560-460b-9c7f-0c894f98e592' 'https://api.snyk.io/api/v1/org/5de0de0d-5433-4473-853f-c1b8e864acfc/project/52656f12-ab00-4465-a071-e81b0024f383')
              CRITICAL=$(echo "$snykCount" | jq .issueCountsBySeverity.critical )
              HIGH=$(echo "$snykCount" | jq .issueCountsBySeverity.high )
              MEDIUM=$(echo "$snykCount" | jq .issueCountsBySeverity.medium )
