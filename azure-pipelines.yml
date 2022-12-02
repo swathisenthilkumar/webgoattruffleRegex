@@ -50,7 +50,7 @@ steps:
              CRITICAL=$( echo "$releasedetails" | jq .staticCritical )
              HIGH=$( echo "$releasedetails" | jq .staticHigh )
              SUM=$( echo "$scanSummary" | jq .totalIssues )
-             echo "Total Sum of all vulnerabilities = $SUM"
+             #echo "Total Sum of all vulnerabilities = $SUM"
              echo "CRITICAL = $CRITICAL"
              echo "HIGH = $HIGH"
              if [ $CRITICAL -gt 5 ]
