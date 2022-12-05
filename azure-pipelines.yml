@@ -21,6 +21,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'wget https://github.com/ANKIT-KS/WebGoat/archive/refs/heads/develop.zip'
+  
 - task: Bash@3
   inputs:
     targetType: 'inline'
@@ -28,6 +29,7 @@ steps:
       wget -c https://github.com/fod-dev/fod-uploader-java/releases/download/v5.2.1/FodUpload.jar
       pwd
       ls -lrt
+  displayName: 'Download FoD JAR'
 
 - task: Bash@3
   inputs:
@@ -36,6 +38,7 @@ steps:
        java -jar FodUpload.jar -ac $(FOD-API-KEY) $(FOD-SECRET) -rid 114186 -purl "https://emea.fortify.com/" -apiurl "https://api.emea.fortify.com/" -z develop.zip -ep 2 -rp 2 -pp 1 -apf -I 1
                status=$?
                echo $status
+  displayName: 'FOD Code SCAN'             
 
 - task: Bash@3
   inputs:
@@ -68,7 +71,7 @@ steps:
              else
                echo "PASSED"
              fi
-       
+      displayName: 'Security Gating' 
 
 # - task: Bash@3
 #   inputs:
