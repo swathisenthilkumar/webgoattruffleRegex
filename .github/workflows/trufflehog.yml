@@ -20,7 +20,7 @@ jobs:
     - name: trufflehog scanning
       continue-on-error: false
       run: |
-       docker run -i -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://github.com/swathisenthilkumar/webgoat --only-verified --fail 
+       docker run -i -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://swathisenthilkumar:${{ secrets.Git_hub_token }}@github.com/swathisenthilkumar/webgoat.git  --only-verified --fail 
   #  - name: Archive Scan results
   #    uses: actions/upload-artifact@v2
   #    with:
