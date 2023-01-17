@@ -21,10 +21,10 @@ jobs:
       continue-on-error: false
       run: |
          docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --fail
-          if(success); then
-           echo "No secrets"
+          if(Failure); then
+           echo No secrets
           else
-            echo "Application has secrets"
+            echo Application has secrets
           fi
       # docker run -i -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://swathisenthilkumar:${{ secrets.Git_hub_token }}@github.com/swathisenthilkumar/webgoat.git  --no-verification  --fail 
   #  - name: Archive Scan results
