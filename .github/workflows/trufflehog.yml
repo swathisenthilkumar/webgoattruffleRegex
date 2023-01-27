@@ -21,11 +21,12 @@ jobs:
       continue-on-error: false
       run: |
          docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --fail
-          if(exit -eq 183); then
-           echo " secrets"
-          else
+         if [ "$?" != "0" ]; then
+           echo "$?"
+           echo "Application has secrets"
+         else 
          echo "Application has no secrets"
-          fi
+         fi
       # docker run -i -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://swathisenthilkumar:${{ secrets.Git_hub_token }}@github.com/swathisenthilkumar/webgoat.git  --no-verification  --fail 
   #  - name: Archive Scan results
   #    uses: actions/upload-artifact@v2
