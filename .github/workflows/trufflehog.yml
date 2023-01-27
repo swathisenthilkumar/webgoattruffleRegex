@@ -27,6 +27,7 @@ jobs:
          else 
          echo "Application has no secrets"
          fi
+         
       # docker run -i -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://swathisenthilkumar:${{ secrets.Git_hub_token }}@github.com/swathisenthilkumar/webgoat.git  --no-verification  --fail 
   #  - name: Archive Scan results
   #    uses: actions/upload-artifact@v2
