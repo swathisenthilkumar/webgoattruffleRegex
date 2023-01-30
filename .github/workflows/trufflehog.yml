@@ -35,7 +35,6 @@ jobs:
       env:
         OUTCOME: ${{ steps.trufflehogscanning.outcome }}
       run: |
-     
         echo $OUTCOME
         echo "failed"
          
