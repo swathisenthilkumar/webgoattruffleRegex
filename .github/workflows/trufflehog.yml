@@ -21,6 +21,7 @@ jobs:
       continue-on-error: true
       run: |
          docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --fail
+         echo "**********$?"
          if [ $? != 0 ]; then
            echo $?
            echo "Application has secrets"
