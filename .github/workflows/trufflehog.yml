@@ -11,23 +11,31 @@ permissions:
   contents: read
 
 jobs:
-  snyk:
+  trufflehog:
     permissions:
       contents: read 
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: trufflehog scanning
+    - name: trufflehogscanning
       continue-on-error: true
       run: |
          docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --fail
-         echo "**********$?"
-         if [ $? != 0 ]; then
-           echo $?
-           echo "Application has secrets"
-         else 
-         echo "Application has no secrets"
-         fi
+         #echo "**********$?"
+    - name: Checking condition
+      if: ${{steps.trufflehogscanning.outcome == '183'}}
+      run: |
+          echo "success"
+    - name: Checking not condition
+      if: ${{steps.trufflehogscanning.outcome != '183'}}
+      run: |
+          echo "failed"
+        # if [ $? != 0 ]; then
+          # echo $?
+          # echo "Application has secrets"
+        # else 
+         #echo "Application has no secrets"
+         #fi
          
       # docker run -i -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://swathisenthilkumar:${{ secrets.Git_hub_token }}@github.com/swathisenthilkumar/webgoat.git  --no-verification  --fail 
   #  - name: Archive Scan results
