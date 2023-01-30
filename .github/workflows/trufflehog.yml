@@ -28,8 +28,12 @@ jobs:
           echo "success"
     - name: Checking not condition
       if: ${{steps.trufflehogscanning.outcome != '183'}}
+      env:
+        OUTCOME: ${{ steps.trufflehogscanning.outcome }}
       run: |
-          echo "failed"
+        echo "failed"
+        echo "$OUTCOME" 
+          
         # if [ $? != 0 ]; then
           # echo $?
           # echo "Application has secrets"
