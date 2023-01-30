@@ -24,22 +24,20 @@ jobs:
          #echo "**********$?"
     - name: Checking condition
       if: ${{steps.trufflehogscanning.outcome == '183'}}
+      env:
+        OUTCOME: ${{ steps.trufflehogscanning.outcome }}
       run: |
-          echo "success"
+     
+        echo $OUTCOME
+        echo "Success"
     - name: Checking not condition
       if: ${{steps.trufflehogscanning.outcome != '183'}}
       env:
         OUTCOME: ${{ steps.trufflehogscanning.outcome }}
       run: |
+     
+        echo $OUTCOME
         echo "failed"
-        echo "$OUTCOME" 
-          
-        # if [ $? != 0 ]; then
-          # echo $?
-          # echo "Application has secrets"
-        # else 
-         #echo "Application has no secrets"
-         #fi
          
       # docker run -i -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://swathisenthilkumar:${{ secrets.Git_hub_token }}@github.com/swathisenthilkumar/webgoat.git  --no-verification  --fail 
   #  - name: Archive Scan results
