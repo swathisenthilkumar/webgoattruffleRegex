@@ -18,10 +18,10 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: trufflehog scanning
-      continue-on-error: false
+     
       run: |
-         docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified
-         if [ $? == 0 ]; then
+         docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --fail
+         if [ $? != 0 ]; then
            echo $?
            echo "Application has secrets"
          else 
