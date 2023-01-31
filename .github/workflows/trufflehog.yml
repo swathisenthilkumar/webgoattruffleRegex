@@ -21,7 +21,9 @@ jobs:
       continue-on-error: true
       run: |
          docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --fail
-         if:always()
+         
+    - name: condition check
+      run: |
          status=$?
          echo $status
          if $status -eq 183 
