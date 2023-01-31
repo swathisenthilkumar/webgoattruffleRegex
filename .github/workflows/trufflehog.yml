@@ -20,8 +20,8 @@ jobs:
     - name: trufflehogscanning
       continue-on-error: true
       run: |
-         docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --fail
-         status=$?
+         # docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --fail
+         status=$(docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --fail)
          echo $status
     - name: condition check
       run: |
