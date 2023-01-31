@@ -22,10 +22,10 @@ jobs:
       run: |
          docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --fail
          status=$?
-          echo $status
+         echo $status
          if test $status -eq 183 
          then
-           curl -H 'Content-Type: application/json' -d ' {"text": "Your application has secrets" }'  https://accenture.webhook.office.com/webhookb2/c6aea564-fe88-48b4-9fa6-a737f1425035@e0793d39-0939-496d-b129-198edd916feb/IncomingWebhook/15e5aab7761341388f908a5fe592fbc9/570d319c-d336-48a2-b32e-88ba623aa565
+            curl -H 'Content-Type: application/json' -d ' {"text": "Your application has secrets" }'  https://accenture.webhook.office.com/webhookb2/c6aea564-fe88-48b4-9fa6-a737f1425035@e0793d39-0939-496d-b129-198edd916feb/IncomingWebhook/15e5aab7761341388f908a5fe592fbc9/570d319c-d336-48a2-b32e-88ba623aa565
          else
             echo "check"
             curl -H 'Content-Type: application/json' -d ' {"text": "Your application has no secrets" }'  https://accenture.webhook.office.com/webhookb2/c6aea564-fe88-48b4-9fa6-a737f1425035@e0793d39-0939-496d-b129-198edd916feb/IncomingWebhook/15e5aab7761341388f908a5fe592fbc9/570d319c-d336-48a2-b32e-88ba623aa565
