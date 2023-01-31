@@ -18,13 +18,13 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: trufflehogscanning
-      id: Scan
+      id: scan
       continue-on-error: true
       run: |
          docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --fail
     - name: trufflehogcondition
       id: condition
-         if :steps.Scan.outcome != 'success' 
+         if :steps.scan.outcome != 'success' 
       run: |
           curl -H 'Content-Type: application/json' -d ' {"text": "Your application has secrets" }'  $(webhook)
           exit 1
