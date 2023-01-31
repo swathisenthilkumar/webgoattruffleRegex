@@ -21,17 +21,19 @@ jobs:
       id: scan
       continue-on-error: true
       run: |
-        status= $(docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --fail)
-          if: always()
-            echo $status
-          if: failure()
+       docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --fail)
+      if: always()
+       echo $?
+    - name: Notify dedicated teams channel for secrets
+      if: failure()
+      run: |
         curl -H 'Content-Type: application/json' -d ' {"text": "Your application has secrets" }'  $(webhook)
-          exit 1
-          if: success()
+        
+    - name: Notify dedicated teams channel for secrets not found
+      if: success()
+      run: |
             echo "check"
             curl -H 'Content-Type: application/json' -d ' {"text": "Your application has no secrets" }'  $(webhook)
-          fi
-          continueOnError: true
       # docker run -i -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://swathisenthilkumar:${{ secrets.Git_hub_token }}@github.com/swathisenthilkumar/webgoat.git  --no-verification  --fail 
   #  - name: Archive Scan results
   #    uses: actions/upload-artifact@v2
