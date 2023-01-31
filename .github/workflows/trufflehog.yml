@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: trufflehogscanning
       id: scan
-      continue-on-error: true
+      continue-on-error: false
       run: |
        docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --fail
       if: always()
