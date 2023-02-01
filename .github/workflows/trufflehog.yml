@@ -21,10 +21,10 @@ jobs:
       id: scan
       continue-on-error: false
       run: |
-       docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --since_commit --fail
+       docker run -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --only-verified --since-commit --fail
       if: always()
     - name: Notify dedicated teams channel for secrets
-      if: failure()
+      if: failure() 
       run: |
          curl -H 'Content-Type: application/json' -d ' {"text": "Your application has secrets" }'  ${{ secrets.webhook}}
          echo "Secrets found"
