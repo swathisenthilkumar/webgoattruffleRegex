@@ -28,7 +28,7 @@ jobs:
       run: |
          curl -H 'Content-Type: application/json' -d ' {"text": "Your application has secrets" }'  ${{ secrets.webhook}}
          echo "Secrets found"
-        
+      continue-on-error: true 
     - name: Notify dedicated teams channel for secrets not found
       if: success()
       run: |
