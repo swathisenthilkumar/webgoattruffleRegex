@@ -34,7 +34,7 @@ jobs:
       run: |
             echo "check"
       continue-on-error: true      
-            # curl -H 'Content-Type: application/json' -d ' {"text": "Your application has no secrets" }'  $(webhook)
+            # curl -H 'Content-Type: application/json' -d ' {"text": "Your application has no secrets" }'   ${{ secrets.webhook}}
       # docker run -i -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://swathisenthilkumar:${{ secrets.Git_hub_token }}@github.com/swathisenthilkumar/webgoat.git  --no-verification  --fail 
   #  - name: Archive Scan results
   #    uses: actions/upload-artifact@v2
