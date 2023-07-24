@@ -1,0 +1,54 @@
+name: Trufflehog Scan
+
+on: push
+
+
+jobs:
+  Trufflehog:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: trufflehog scanning
+      continue-on-error: false
+      run: |
+        curl -q "https://storage.googleapis.com/thog-releases/trufflehog-scanner/latest/fetch.sh" | bash
+        ./trufflehog --fail-verified git ${{ github.event.repository.default_branch }} HEAD
+      if: always()
+    - name: Notify dedicated teams channel for secrets
+      if: failure() 
+      run: |
+         curl -H 'Content-Type: application/json' -d ' {"text": "Your application has secrets" }'  ${{ secrets.webhook}}
+         echo "Secrets found"
+      continue-on-error: true 
+    - name: Notify dedicated teams channel for secrets not found
+      if: success()
+      run: |
+           curl -H 'Content-Type: application/json' -d ' {"text": "Your application has no secrets" }'  ${{ secrets.webhook}} 
+            echo "No Secrets"
+      continue-on-error: true
+      
+      
+      # docker run -i -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://${{ secrets.Git_token}}@github.com/swathisenthilkumar/WebGoatTest.git   --only-verified --fail
+     #  if: always()
+  #  - name: Archive Scan results
+  #    uses: actions/upload-artifact@v2
+  #    with:
+   #       name: scan-report
+   #       path: result.json
+   # - name: Notify dedicated teams channel
+    #  if: failure()
+     # run: |
+      #   curl -H 'Content-Type: application/json' -d ' {"text": "Your application has secrets" }'  https://accenture.webhook.office.com/webhookb2/c6aea564-fe88-48b4-9fa6-a737f1425035@e0793d39-0939-496d-b129-198edd916feb/IncomingWebhook/15e5aab7761341388f908a5fe592fbc9/570d319c-d336-48a2-b32e-88ba623aa565
+  #  - name: Notify for Success
+     # if: Success()
+     # run: |
+      #   curl -H 'Content-Type: application/json' -d ' {"text": "Your application has no secrets" }'  https://accenture.webhook.office.com/webhookb2/c6aea564-fe88-48b4-9fa6-a737f1425035@e0793d39-0939-496d-b129-198edd916feb/IncomingWebhook/15e5aab7761341388f908a5fe592fbc9/570d319c-d336-48a2-b32e-88ba623aa565
+         
+     # uses: jdcargile/ms-teams-notification@v1.3
+     # with:
+        #  github-token: ${{ secrets.Git_token }} # this will use the runner's token.
+        #  ms-teams-webhook-uri: https://accenture.webhook.office.com/webhookb2/c6aea564-fe88-48b4-9fa6-a737f1425035@e0793d39-0939-496d-b129-198edd916feb/IncomingWebhook/15e5aab7761341388f908a5fe592fbc9/570d319c-d336-48a2-b32e-88ba623aa565
+        #  notification-summary: Your custom notification message 
+        #  notification-color: 17a2b8
+        #  timezone: America/Denver
+        
