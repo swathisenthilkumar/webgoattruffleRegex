@@ -1,0 +1,23 @@
+name: TruffleHog Enterprise scan
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "develop" ]
+
+jobs:
+  scanning:
+    name: TruffleHog Enterprise scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # fetch all history so multiple commits can be scanned
+      - name: TruffleHog Enterprise scan
+        uses: trufflesecurity/TruffleHog-Enterprise-Github-Action@main
+        with:
+            args: --regex --entropy=true --max_depth=1000 --rules regexes.json
+            
