@@ -28,6 +28,7 @@ jobs:
       continue-on-error: true
       
       
+      
       # docker run -i -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://${{ secrets.Git_token}}@github.com/swathisenthilkumar/WebGoatTest.git   --only-verified --fail
      #  if: always()
   #  - name: Archive Scan results
