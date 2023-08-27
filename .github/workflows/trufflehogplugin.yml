@@ -19,5 +19,5 @@ jobs:
       - name: TruffleHog Enterprise scan
         uses: trufflesecurity/TruffleHog-Enterprise-Github-Action@main
         with:
-            args: --regex --entropy=true --max_depth=1000 --rules regexes.json
+            args: "--regex --entropy=true --max_depth=1000 --rules /regexes.json"
             
