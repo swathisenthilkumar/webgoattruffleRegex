@@ -16,6 +16,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0 # fetch all history so multiple commits can be scanned
+          ref: ${{ github.head_ref }} 
       - name: TruffleHog scan
         run: |
           pip install trufflehog
