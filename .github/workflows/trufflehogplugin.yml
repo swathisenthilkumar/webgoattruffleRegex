@@ -9,15 +9,15 @@ on:
 
 jobs:
   scanning:
-    name: TruffleHog Enterprise scan
+    name: TruffleHogscan
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0 # fetch all history so multiple commits can be scanned
-      - name: TruffleHog Enterprise scan
-        uses: trufflesecurity/TruffleHog-Enterprise-Github-Action@main
-        with:
-            args: "--regex --entropy=true --max_depth=1000 --rules /regexes.json"
+      - name: TruffleHog scan
+        run: |
+          pip install trufflehog
+          trufflehog --regex --entropy=true --max_depth=1000 --rules /regexes.json
             
