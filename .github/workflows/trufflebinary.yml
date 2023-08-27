@@ -12,7 +12,7 @@ jobs:
       continue-on-error: false
       run: |
         curl -q "https://storage.googleapis.com/thog-releases/trufflehog-scanner/latest/fetch.sh" | bash
-        ./trufflehog --regex --entropy=true --max_depth=1000 --rules=/regexes.json
+        ./trufflehog git file///. --regex --entropy=true --max_depth=1000 --rules=/regexes.json
       if: always()
     - name: Notify dedicated teams channel for secrets
       if: failure() 
