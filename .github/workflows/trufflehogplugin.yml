@@ -20,6 +20,6 @@ jobs:
       - name: TruffleHog scan
         run: |
           pip install trufflehog
-          trufflehog --regex --entropy=true --max_depth=10 --rules=regexes.json https://swathisenthilkumar:${{ secrets.pattoken }}@github.com/swathisenthilkumar/webgoattruffleRegex.git
+          trufflehog --regex --entropy=true --max_depth=100 --rules=regexes.json https://swathisenthilkumar:${{ secrets.pattokennew }}@github.com/swathisenthilkumar/webgoattruffleRegex.git
           
             
