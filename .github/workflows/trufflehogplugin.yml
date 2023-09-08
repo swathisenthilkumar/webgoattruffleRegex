@@ -19,7 +19,7 @@ jobs:
           ref: ${{ github.head_ref }} 
       - name: TruffleHog scan
         run: |
-          npm install trufflehog
+          pip install trufflehog
           trufflehog --regex --entropy=true --max_depth=100 --rules=regexes.json https://swathisenthilkumar:${{ secrets.pattokennew }}@github.com/swathisenthilkumar/webgoattruffleRegex.git
           
             
