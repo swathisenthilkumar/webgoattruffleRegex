@@ -10,3 +10,11 @@ byte[] ipAddress = { 192.0.2.1 };
 InetAddress address = InetAddress. getByAddress(ipAddress); 
 String hostName = address. getHostByAddress(ipAddress);
 
+/ Example usage:
+const ipAddress = '192.168.0.1';
+if (isValidIpAddress(ipAddress)) {
+  console.log(`${ipAddress} is a valid IP address.`);
+} else {
+  console.log(`${ipAddress} is not a valid IP address.`);
+}
+
